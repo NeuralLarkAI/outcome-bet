@@ -1,49 +1,37 @@
-import { Wallet } from 'lucide-react';
-import { WalletState } from '@/types/market';
+import React from "react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
-interface HeaderProps {
-  wallet: WalletState;
-  onConnect: () => void;
-  onDisconnect: () => void;
-}
+type HeaderProps = {
+  title?: string;
+  subtitle?: string;
+};
 
-export function Header({ wallet, onConnect, onDisconnect }: HeaderProps) {
+export function Header({
+  title = "YesNo",
+  subtitle = "Simple outcome markets on Solana (Devnet)",
+}: HeaderProps) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">Y</span>
+    <header className="w-full border-b border-border/60 bg-background/80 backdrop-blur">
+      <div className="mx-auto max-w-6xl px-4 py-4 sm:py-5 flex items-center justify-between gap-4">
+        {/* Left: Brand */}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center font-bold text-foreground">
+              YN
+            </div>
+            <h1 className="text-lg sm:text-xl font-semibold text-foreground">
+              {title}
+            </h1>
           </div>
-          <span className="text-xl font-bold text-foreground">YesNo</span>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+            {subtitle}
+          </p>
         </div>
 
-        {wallet.connected ? (
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex flex-col items-end">
-              <span className="text-sm text-muted-foreground">Balance</span>
-              <span className="font-semibold text-foreground">{wallet.balance.toFixed(2)} SOL</span>
-            </div>
-            <button
-              onClick={onDisconnect}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary hover:bg-secondary/80 
-                         transition-colors duration-200"
-            >
-              <Wallet className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">{wallet.address}</span>
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={onConnect}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground
-                       font-medium transition-all duration-200 hover:scale-[1.02] hover:shadow-lg
-                       hover:shadow-primary/20"
-          >
-            <Wallet className="w-4 h-4" />
-            <span>Connect Wallet</span>
-          </button>
-        )}
+        {/* Right: Wallet */}
+        <div className="flex items-center gap-2">
+          <WalletMultiButton className="!rounded-full !px-4 !py-2 !text-sm !font-semibold !bg-primary hover:!bg-primary/90" />
+        </div>
       </div>
     </header>
   );
