@@ -91,18 +91,28 @@ export function MarketCard({
 
         {/* Payout Clarity Line */}
         <div className="text-center text-sm text-muted-foreground">
-          If <span className="text-yes font-medium">YES</span> wins, each 1 SOL returns ~{payoutPerSol.yes.toFixed(2)} SOL
+          If <span className="text-yes font-medium">YES</span> wins, 1 SOL pays ~{payoutPerSol.yes.toFixed(2)} SOL
+        </div>
+
+        {/* Settlement Fee Disclosure - Trust + Placement */}
+        <div className="text-center text-xs text-muted-foreground">
+          1% settlement fee applies to the losing side only.
         </div>
 
         {/* Pool Size - Above the fold */}
-        <div className="text-center text-sm font-medium text-foreground bg-secondary/50 rounded-lg py-2 px-4">
-          Total Pool: {(market.yesPool + market.noPool).toLocaleString()} SOL
+        <div className="text-center bg-secondary/50 rounded-lg py-3 px-4">
+          <div className="text-sm font-semibold text-foreground">
+            Total Pool: {(market.yesPool + market.noPool).toLocaleString()} SOL
+          </div>
+          <div className="text-xs text-muted-foreground mt-0.5">
+            More liquidity = smoother payouts.
+          </div>
         </div>
 
         {/* Action Buttons - Always visible */}
         <div className="flex flex-col gap-4">
           <p className="text-center text-muted-foreground text-sm">
-            {wallet.connected ? 'Pick a side.' : 'Connect wallet to pick a side'}
+            {wallet.connected ? 'Pick a side.' : 'Connect wallet to take a position'}
           </p>
           
           <div className="grid grid-cols-2 gap-3">
@@ -174,10 +184,6 @@ export function MarketCard({
           </p>
         </div>
 
-        {/* Footer Info */}
-        <div className="text-center text-xs text-muted-foreground pt-2 border-t border-border/50">
-          1% settlement fee applies
-        </div>
       </div>
     </div>
   );
