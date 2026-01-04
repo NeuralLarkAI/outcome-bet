@@ -2,15 +2,19 @@ import { Header } from '@/components/Header';
 import { MarketCard } from '@/components/MarketCard';
 import { PositionCard } from '@/components/PositionCard';
 import { AdminPanel } from '@/components/AdminPanel';
+import { EventSelector } from '@/components/EventSelector';
 import { useMarket } from '@/hooks/useMarket';
 
 const Index = () => {
   const {
     market,
+    selectedAsset,
+    setSelectedAsset,
     positions,
     wallet,
     yesPercentage,
     noPercentage,
+    payoutPerSol,
     connectWallet,
     disconnectWallet,
     takeSide,
@@ -30,10 +34,18 @@ const Index = () => {
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-lg mx-auto">
           {/* Tagline */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <p className="text-muted-foreground text-sm tracking-wide uppercase">
               Yes or No. That's it.
             </p>
+          </div>
+
+          {/* Event Selector */}
+          <div className="mb-6 flex justify-center">
+            <EventSelector 
+              selectedAsset={selectedAsset} 
+              onSelectAsset={setSelectedAsset} 
+            />
           </div>
 
           {/* Market Card */}
@@ -42,7 +54,9 @@ const Index = () => {
             wallet={wallet}
             yesPercentage={yesPercentage}
             noPercentage={noPercentage}
+            payoutPerSol={payoutPerSol}
             onTakeSide={takeSide}
+            onConnectWallet={connectWallet}
             calculatePayout={calculatePayout}
           />
 
@@ -67,7 +81,7 @@ const Index = () => {
           {/* Footer Text */}
           <div className="text-center mt-12">
             <p className="text-xs text-muted-foreground">
-              The market settles the outcome.
+              Settlement is automated and verifiable on Solana.
             </p>
           </div>
         </div>
